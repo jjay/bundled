@@ -1,0 +1,6 @@
+env
+data/*
+!data/.gitkeep
+*.pyc
+*.sw?
+*.sqlite3
