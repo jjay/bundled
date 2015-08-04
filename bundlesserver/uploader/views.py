@@ -23,7 +23,7 @@ def unsafe_upload(request):
     app_version = request.POST["app_version"]
     home = path.join(settings.DATA_PATH, app_version)
     if not path.exists(home):
-        mkdirs(home)
+        makedirs(home)
     versions = {}
     versions_file = path.join(home, "versions.json")
     if path.exists(versions_file):
