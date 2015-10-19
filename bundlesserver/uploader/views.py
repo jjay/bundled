@@ -12,8 +12,15 @@ def upload(request):
     except Exception as e:
         logging.exception("Bad thing happen:")
         return HttpResponseServerError("Server Error: %s" %  e)
-        
 
+
+@csrf_exempt
+def upload5(request):
+    try:
+        return unsafe_upload5(request)
+    except Exception as e:
+        logging.exception("Bad think happen:")
+        return HttpResponseServerError("Server Error: %s" % e)        
 
 def unsafe_upload(request):
     #print "Strt uploading, method:", request.method
@@ -42,4 +49,22 @@ def unsafe_upload(request):
             targetfile.write(chunk)
     return HttpResponse("OK")
 
-# Create your views here.
+
+def unsafe_upload5(request):
+    app_version = request.POST["app_version"]
+    home = path.join(settings.DATA_PATH, app_version)
+    if not path.exists(home):
+        mkdirs(home)
+
+    targetfilename = path.join(home, request.POST["name"])
+    if not path.exists(path.dirname(targetfilename)):
+        makedirs(path.dirname(targetfilename))
+
+    with open(targetfilename, "w") as targetfile:
+        for chunk in request.FILES["data"].chunks():
+            targetfile.write(chunk)
+
+    return HttpResponse("OK")
+
+
+
