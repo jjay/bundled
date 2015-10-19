@@ -54,7 +54,7 @@ def unsafe_upload5(request):
     app_version = request.POST["app_version"]
     home = path.join(settings.DATA_PATH, app_version)
     if not path.exists(home):
-        mkdirs(home)
+        makedirs(home)
 
     targetfilename = path.join(home, request.POST["name"])
     if not path.exists(path.dirname(targetfilename)):
